@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController2: UIViewController {
+class DetailRepositoryViewController: UIViewController {
     
     @IBOutlet weak var repositoryImageView: UIImageView!
     @IBOutlet weak var repositoryTitleView: UILabel!
@@ -18,7 +18,7 @@ class ViewController2: UIViewController {
     @IBOutlet weak var forksCountLabel: UILabel!
     @IBOutlet weak var issuesCountLabel: UILabel!
     
-    var parentController: ViewController!
+    var parentController: SearchRepositoryViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()

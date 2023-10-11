@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UITableViewController, UISearchBarDelegate {
+class SearchRepositoryViewController: UITableViewController, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
 
@@ -56,7 +56,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail" {
-            let repositoryDetail = segue.destination as! ViewController2
+            let repositoryDetail = segue.destination as! DetailRepositoryViewController
             repositoryDetail.parentController = self
         }
     }
