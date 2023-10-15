@@ -34,20 +34,39 @@ class SearchRepositoryViewController: UITableViewController, UISearchBarDelegate
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchKeyword = searchBar.text!
-        if let searchKeyword = searchKeyword,  searchKeyword.count != 0 {
+        searchKeyword = searchBar.text
+
+        if let searchKeyword = searchKeyword, searchKeyword.count != 0 {
+
             if let apiURL = URL(string: "https://api.github.com/search/repositories?q=\(searchKeyword)") {
-                urlSessionTask = URLSession.shared.dataTask(with: apiURL) { (data, response, error) in
-                    if let object = try? JSONSerialization.jsonObject(with: data!) as? [String: Any] {
-                        if let items = object["items"] as? [[String: Any]] {
+                let urlSessionTask = URLSession.shared.dataTask(with: apiURL) { (data, response, error) in
+
+                    if let error = error {
+                        print("リクエスト失敗: \(error.localizedDescription)")
+                        return
+                    }
+
+                    guard let data = data else {
+                        print("データがありません")
+                        return
+                    }
+
+                    do {
+                        if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                           let items = json["items"] as? [[String: Any]] {
                             self.repositories = items
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
                             }
+                            print("リクエスト成功")
+                        } else {
+                            print("パースエラー")
                         }
+                    } catch {
+                        print("パースエラー: \(error.localizedDescription)")
                     }
-                    self.urlSessionTask?.resume()
                 }
+                urlSessionTask.resume()
             }
         }
     }
