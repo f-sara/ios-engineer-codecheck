@@ -71,28 +71,28 @@ class SearchRepositoryViewController: UITableViewController, UISearchBarDelegate
         }
     }
 
-        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if segue.identifier == "Detail" {
-                let repositoryDetail = segue.destination as! DetailRepositoryViewController
-                repositoryDetail.parentController = self
-            }
-        }
-
-        override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return repositories.count
-        }
-
-        override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = UITableViewCell()
-            let rp = repositories[indexPath.row]
-            cell.textLabel?.text = rp["full_name"] as? String ?? ""
-            cell.detailTextLabel?.text = rp["language"] as? String ?? ""
-            cell.tag = indexPath.row
-            return cell
-        }
-
-        override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            selectedRowIndex = indexPath.row
-            performSegue(withIdentifier: "Detail", sender: self)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Detail" {
+            let repositoryDetail = segue.destination as! DetailRepositoryViewController
+            repositoryDetail.parentController = self
         }
     }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return repositories.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        let rp = repositories[indexPath.row]
+        cell.textLabel?.text = rp["full_name"] as? String ?? ""
+        cell.detailTextLabel?.text = rp["language"] as? String ?? ""
+        cell.tag = indexPath.row
+        return cell
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedRowIndex = indexPath.row
+        performSegue(withIdentifier: "Detail", sender: self)
+    }
+}
