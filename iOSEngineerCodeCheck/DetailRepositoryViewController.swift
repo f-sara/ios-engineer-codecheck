@@ -34,24 +34,31 @@ class DetailRepositoryViewController: UIViewController {
         }
         
     }
-    
-    func getImage(){
 
+    func getImage(){
         if let selectedRowIndex = parentController.selectedRowIndex {
             let repository = parentController.repositories[selectedRowIndex]
-            repositoryTitleView.text = repository["full_name"] as? String
 
-            if let owner = repository["owner"] as? [String: Any] {
-                if let imageURL = owner["avatar_url"] as? String {
-                    URLSession.shared.dataTask(with: URL(string: imageURL)!) { (data, res, err) in
-                        let image = UIImage(data: data!)!
+            if let owner = repository["owner"] as? [String: Any],
+               let stringImageURL = owner["avatar_url"] as? String,
+               let imageURL = URL(string: stringImageURL) {
+                repositoryTitleView.text = repository["full_name"] as? String
+                URLSession.shared.dataTask(with: imageURL) { (data, res, error) in
+
+                    if let data = data,
+                       let image = UIImage(data: data) {
                         DispatchQueue.main.async {
                             self.repositoryImageView.image = image
                         }
-                    }.resume()
-                }
-            }
+                    } else {
+                        print("画像取得エラー")
+                    }
 
+                    if let error = error {
+                        print("画像取得エラー: \(error.localizedDescription)")
+                    }
+                }.resume()
+            }
         }
     }
 }
