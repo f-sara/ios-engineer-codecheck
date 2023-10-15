@@ -18,7 +18,7 @@ class DetailRepositoryViewController: UIViewController {
     @IBOutlet weak var forksCountLabel: UILabel!
     @IBOutlet weak var issuesCountLabel: UILabel!
     
-    var parentController: SearchRepositoryViewController!
+    weak var parentController: SearchRepositoryViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
