@@ -25,7 +25,6 @@ class SearchRepositoryViewController: UITableViewController, UISearchBarDelegate
     }
 
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // ↓こうすれば初期のテキストを消せる
         searchBar.text = ""
         return true
     }
@@ -74,7 +73,6 @@ class SearchRepositoryViewController: UITableViewController, UISearchBarDelegate
         }
 
         override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            // 画面遷移時に呼ばれる
             selectedRowIndex = indexPath.row
             performSegue(withIdentifier: "Detail", sender: self)
         }
