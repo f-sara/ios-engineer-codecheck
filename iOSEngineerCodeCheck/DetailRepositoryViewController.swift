@@ -43,7 +43,7 @@ class DetailRepositoryViewController: UIViewController {
                let stringImageURL = owner["avatar_url"] as? String,
                let imageURL = URL(string: stringImageURL) {
                 repositoryTitleView.text = repository["full_name"] as? String
-                URLSession.shared.dataTask(with: imageURL) { (data, res, error) in
+                URLSession.shared.dataTask(with: imageURL) { (data, _, error) in
 
                     if let data = data,
                        let image = UIImage(data: data) {

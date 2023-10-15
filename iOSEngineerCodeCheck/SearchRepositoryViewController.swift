@@ -39,7 +39,7 @@ class SearchRepositoryViewController: UITableViewController, UISearchBarDelegate
         if let searchKeyword = searchKeyword, searchKeyword.count != 0 {
 
             if let apiURL = URL(string: "https://api.github.com/search/repositories?q=\(searchKeyword)") {
-                let urlSessionTask = URLSession.shared.dataTask(with: apiURL) { (data, response, error) in
+                let urlSessionTask = URLSession.shared.dataTask(with: apiURL) { (data, _, error) in
 
                     if let error = error {
                         print("リクエスト失敗: \(error.localizedDescription)")
