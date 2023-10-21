@@ -8,21 +8,25 @@
 
 import UIKit
 
-class SearchRepositoryViewController: UITableViewController, UISearchBarDelegate {
-
+final class SearchRepositoryViewController: UITableViewController{
     @IBOutlet weak var searchBar: UISearchBar!
 
-    var repositories: [[String: Any]] = []
+    private var presenter: SearchRepositoryPresenterInput!
+
+    var repositories: [RepositoryModel] = []
     var urlSessionTask: URLSessionTask?
-    var searchKeyword: String?
-    var apiURL: String?
     var selectedRowIndex: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.text = "GitHubのリポジトリを検索できるよー"
         searchBar.delegate = self
+        presenter = SearchRepositoryPresenter(output: self)
     }
+}
+
+extension SearchRepositoryViewController: UISearchBarDelegate {
+
 
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.text = ""
@@ -34,47 +38,16 @@ class SearchRepositoryViewController: UITableViewController, UISearchBarDelegate
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchKeyword = searchBar.text
-
-        if let searchKeyword = searchKeyword, searchKeyword.count != 0 {
-
-            if let apiURL = URL(string: "https://api.github.com/search/repositories?q=\(searchKeyword)") {
-                let urlSessionTask = URLSession.shared.dataTask(with: apiURL) { (data, _, error) in
-
-                    if let error = error {
-                        print("リクエスト失敗: \(error.localizedDescription)")
-                        return
-                    }
-
-                    guard let data = data else {
-                        print("データがありません")
-                        return
-                    }
-
-                    do {
-                        if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                           let items = json["items"] as? [[String: Any]] {
-                            self.repositories = items
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                            }
-                            print("リクエスト成功")
-                        } else {
-                            print("パースエラー")
-                        }
-                    } catch {
-                        print("パースエラー: \(error.localizedDescription)")
-                    }
-                }
-                urlSessionTask.resume()
-            }
-        }
+        guard let searchKeyword = searchBar.text, searchKeyword.count != 0 else { return }
+        presenter?.searchRepositories(SearchKeyword: searchKeyword)
     }
+}
 
+extension SearchRepositoryViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail" {
-            let repositoryDetail = segue.destination as! DetailRepositoryViewController
-            repositoryDetail.parentController = self
+            let repositoryDetail = segue.destination as? DetailRepositoryViewController
+            repositoryDetail?.parentController = self
         }
     }
 
@@ -85,8 +58,8 @@ class SearchRepositoryViewController: UITableViewController, UISearchBarDelegate
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         let repository = repositories[indexPath.row]
-        cell.textLabel?.text = repository["full_name"] as? String ?? ""
-        cell.detailTextLabel?.text = repository["language"] as? String ?? ""
+        cell.textLabel?.text = repository.fullName
+        cell.detailTextLabel?.text = repository.language
         cell.tag = indexPath.row
         return cell
     }
@@ -94,5 +67,14 @@ class SearchRepositoryViewController: UITableViewController, UISearchBarDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedRowIndex = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
+    }
+}
+
+extension SearchRepositoryViewController: SearchRepositoryPresenterOutput {
+    func reloadData(repositories: [RepositoryModel]) {
+        self.repositories = repositories
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
