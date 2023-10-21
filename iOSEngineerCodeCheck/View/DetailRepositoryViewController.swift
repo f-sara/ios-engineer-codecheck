@@ -17,6 +17,8 @@ class DetailRepositoryViewController: UIViewController {
     @IBOutlet weak var watchersCountLabel: UILabel!
     @IBOutlet weak var forksCountLabel: UILabel!
     @IBOutlet weak var issuesCountLabel: UILabel!
+
+    private var presenter: DetailRepositoryPresenter!
     
     weak var parentController: SearchRepositoryViewController!
 
@@ -25,40 +27,35 @@ class DetailRepositoryViewController: UIViewController {
         
         if let selectedRowIndex = parentController.selectedRowIndex {
             let repository = parentController.repositories[selectedRowIndex]
-            languageLabel.text = "Written in \(repository["language"] as? String ?? "")"
-            StarsCountLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
-            watchersCountLabel.text = "\(repository["watchers_count"] as? Int ?? 0) watchers"
-            forksCountLabel.text = "\(repository["forks_count"] as? Int ?? 0) forks"
-            issuesCountLabel.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
+            repositoryTitleView.text = repository.fullName
+            languageLabel.text = "Written in \(repository.language)"
+            StarsCountLabel.text = "\(repository.stargazersCount) stars"
+            watchersCountLabel.text = "\(repository.watchersCount) watchers"
+            forksCountLabel.text = "\(repository.forksCount) forks"
+            issuesCountLabel.text = "\(repository.openIssuesCount) open issues"
             getImage()
         }
         
     }
-
+    
     func getImage(){
         if let selectedRowIndex = parentController.selectedRowIndex {
             let repository = parentController.repositories[selectedRowIndex]
-
-            if let owner = repository["owner"] as? [String: Any],
-               let stringImageURL = owner["avatar_url"] as? String,
-               let imageURL = URL(string: stringImageURL) {
-                repositoryTitleView.text = repository["full_name"] as? String
-                URLSession.shared.dataTask(with: imageURL) { (data, _, error) in
-
-                    if let data = data,
-                       let image = UIImage(data: data) {
-                        DispatchQueue.main.async {
-                            self.repositoryImageView.image = image
-                        }
-                    } else {
-                        print("画像取得エラー")
+            
+            let imageURL = repository.avatarURL
+            URLSession.shared.dataTask(with: imageURL) { (data, _, error) in
+                if let data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self.repositoryImageView.image = image
                     }
-
-                    if let error = error {
-                        print("画像取得エラー: \(error.localizedDescription)")
-                    }
-                }.resume()
-            }
+                } else {
+                    print("画像取得エラー")
+                }
+                if let error = error {
+                    print("画像取得エラー: \(error.localizedDescription)")
+                }
+            }.resume()
         }
     }
 }
+
