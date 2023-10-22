@@ -17,8 +17,6 @@ class DetailRepositoryViewController: UIViewController {
     @IBOutlet weak var watchersCountLabel: UILabel!
     @IBOutlet weak var forksCountLabel: UILabel!
     @IBOutlet weak var issuesCountLabel: UILabel!
-
-    private var presenter: DetailRepositoryPresenter!
     
     weak var parentController: SearchRepositoryViewController!
 

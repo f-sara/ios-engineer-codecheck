@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8B3652612AE2866C00B54059 /* RepositoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3652602AE2866C00B54059 /* RepositoryModel.swift */; };
 		8B3652632AE2897700B54059 /* SearchRepositoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3652622AE2897700B54059 /* SearchRepositoryPresenter.swift */; };
-		8B3652652AE2943100B54059 /* DetailRepositoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3652642AE2943100B54059 /* DetailRepositoryPresenter.swift */; };
 		BF0A658D244F2A3B00280FA6 /* DetailRepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0A658C244F2A3B00280FA6 /* DetailRepositoryViewController.swift */; };
 		BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945DE244DC5E80012785A /* AppDelegate.swift */; };
 		BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945E0244DC5E80012785A /* SceneDelegate.swift */; };
@@ -41,7 +40,6 @@
 /* Begin PBXFileReference section */
 		8B3652602AE2866C00B54059 /* RepositoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryModel.swift; sourceTree = "<group>"; };
 		8B3652622AE2897700B54059 /* SearchRepositoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoryPresenter.swift; sourceTree = "<group>"; };
-		8B3652642AE2943100B54059 /* DetailRepositoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRepositoryPresenter.swift; sourceTree = "<group>"; };
 		BF0A658C244F2A3B00280FA6 /* DetailRepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRepositoryViewController.swift; sourceTree = "<group>"; };
 		BFD945DB244DC5E80012785A /* iOSEngineerCodeCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSEngineerCodeCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD945DE244DC5E80012785A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -106,7 +104,6 @@
 			isa = PBXGroup;
 			children = (
 				8B3652622AE2897700B54059 /* SearchRepositoryPresenter.swift */,
-				8B3652642AE2943100B54059 /* DetailRepositoryPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -296,7 +293,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3652632AE2897700B54059 /* SearchRepositoryPresenter.swift in Sources */,
-				8B3652652AE2943100B54059 /* DetailRepositoryPresenter.swift in Sources */,
 				BFD945E3244DC5E80012785A /* SearchRepositoryViewController.swift in Sources */,
 				8B3652612AE2866C00B54059 /* RepositoryModel.swift in Sources */,
 				BF0A658D244F2A3B00280FA6 /* DetailRepositoryViewController.swift in Sources */,
