@@ -60,13 +60,13 @@ extension SearchRepositoryPresenter {
                 return
             }
             
-            self.parseData(data: data)
+            self.parseRepositoryData(data: data)
         }
         urlSessionTask.resume()
     }
 
     // データのパース処理
-    private func parseData(data: Data) {
+    private func parseRepositoryData(data: Data) {
         do {
             if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                let items = json["items"] as? [[String: Any]] {

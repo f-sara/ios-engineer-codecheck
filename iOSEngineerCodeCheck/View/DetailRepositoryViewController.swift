@@ -25,7 +25,7 @@ class DetailRepositoryViewController: UIViewController {
         
         if let selectedRowIndex = parentController.selectedRowIndex {
             updateUI(selectedRowIndex)
-            getImage()
+            getImage(selectedRowIndex)
         }
         
     }
@@ -43,24 +43,26 @@ extension DetailRepositoryViewController {
         issuesCountLabel.text = "\(repository.openIssuesCount) open issues"
     }
     
-    private func getImage(){
-        if let selectedRowIndex = parentController.selectedRowIndex {
-            let repository = parentController.repositories[selectedRowIndex]
-            
-            let imageURL = repository.avatarURL
-            URLSession.shared.dataTask(with: imageURL) { (data, _, error) in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.repositoryImageView.image = image
-                    }
-                } else {
-                    print("画像取得エラー")
-                }
-                if let error = error {
-                    print("画像取得エラー: \(error.localizedDescription)")
-                }
-            }.resume()
-        }
+    private func getImage(_ selectedRowIndex: Int){
+        let repository = parentController.repositories[selectedRowIndex]
+        let imageURL = repository.avatarURL
+        parseImageData(imageURL)
     }
+
+    private func parseImageData(_ imageURL: URL) {
+        URLSession.shared.dataTask(with: imageURL) { (data, _, error) in
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.repositoryImageView.image = image
+                }
+            } else {
+                print("画像取得エラー")
+            }
+            if let error = error {
+                print("画像取得エラー: \(error.localizedDescription)")
+            }
+        }.resume()
+    }
+
 }
 
