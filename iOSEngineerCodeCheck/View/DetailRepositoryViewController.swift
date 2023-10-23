@@ -35,6 +35,9 @@ class DetailRepositoryViewController: UIViewController {
         }
         
     }
+}
+
+extension DetailRepositoryViewController {
     
     private func getImage(){
         if let selectedRowIndex = parentController.selectedRowIndex {
