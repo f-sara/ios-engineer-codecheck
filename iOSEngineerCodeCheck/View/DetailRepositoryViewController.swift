@@ -36,7 +36,7 @@ class DetailRepositoryViewController: UIViewController {
         
     }
     
-    func getImage(){
+    private func getImage(){
         if let selectedRowIndex = parentController.selectedRowIndex {
             let repository = parentController.repositories[selectedRowIndex]
             

@@ -36,20 +36,20 @@ final class SearchRepositoryViewController: UITableViewController{
 extension SearchRepositoryViewController: UISearchBarDelegate {
 
 
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+    internal func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.text = ""
         return true
     }
 
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    internal func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         urlSessionTask?.cancel()
     }
 
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    internal func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchRepository()
     }
 
-    func searchRepository() {
+    internal func searchRepository() {
         guard let searchKeyword = searchBar.text, searchKeyword.count != 0 else { return }
         presenter?.searchRepositories(searchKeyword: searchKeyword)
     }
@@ -83,7 +83,7 @@ extension SearchRepositoryViewController {
 }
 
 extension SearchRepositoryViewController: SearchRepositoryPresenterOutput {
-    func reloadData(repositories: [RepositoryModel]) {
+    internal func reloadData(repositories: [RepositoryModel]) {
         self.repositories = repositories
         DispatchQueue.main.async {
             self.tableView.reloadData()
