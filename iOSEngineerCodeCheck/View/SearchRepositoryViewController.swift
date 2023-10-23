@@ -19,8 +19,16 @@ final class SearchRepositoryViewController: UITableViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupSearchBar()
+        setupPresenter()
+    }
+
+    private func setupSearchBar() {
         searchBar.text = "GitHubのリポジトリを検索できるよー"
         searchBar.delegate = self
+    }
+
+    private func setupPresenter() {
         presenter = SearchRepositoryPresenter(output: self)
     }
 }
