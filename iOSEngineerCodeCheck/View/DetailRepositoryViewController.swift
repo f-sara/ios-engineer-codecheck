@@ -24,13 +24,7 @@ class DetailRepositoryViewController: UIViewController {
         super.viewDidLoad()
         
         if let selectedRowIndex = parentController.selectedRowIndex {
-            let repository = parentController.repositories[selectedRowIndex]
-            repositoryTitleView.text = repository.fullName
-            languageLabel.text = "Written in \(repository.language)"
-            StarsCountLabel.text = "\(repository.stargazersCount) stars"
-            watchersCountLabel.text = "\(repository.watchersCount) watchers"
-            forksCountLabel.text = "\(repository.forksCount) forks"
-            issuesCountLabel.text = "\(repository.openIssuesCount) open issues"
+            updateUI(selectedRowIndex)
             getImage()
         }
         
@@ -38,6 +32,16 @@ class DetailRepositoryViewController: UIViewController {
 }
 
 extension DetailRepositoryViewController {
+
+    private func updateUI(_ selectedRowIndex: Int) {
+        let repository = parentController.repositories[selectedRowIndex]
+        repositoryTitleView.text = repository.fullName
+        languageLabel.text = "Written in \(repository.language)"
+        StarsCountLabel.text = "\(repository.stargazersCount) stars"
+        watchersCountLabel.text = "\(repository.watchersCount) watchers"
+        forksCountLabel.text = "\(repository.forksCount) forks"
+        issuesCountLabel.text = "\(repository.openIssuesCount) open issues"
+    }
     
     private func getImage(){
         if let selectedRowIndex = parentController.selectedRowIndex {
