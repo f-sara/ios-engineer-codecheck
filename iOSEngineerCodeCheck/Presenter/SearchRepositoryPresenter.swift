@@ -10,6 +10,8 @@ import Foundation
 
 protocol SearchRepositoryPresenterInput {
     func searchRepositories(searchKeyword: String)
+    func cancelURLSession()
+
 }
 
 protocol SearchRepositoryPresenterOutput: AnyObject {
@@ -19,6 +21,7 @@ protocol SearchRepositoryPresenterOutput: AnyObject {
 final class SearchRepositoryPresenter {
     private weak var output: SearchRepositoryPresenterOutput!
     private var repositories: [RepositoryModel]
+    private var urlSessionTask: URLSessionTask?
 
     init(output: SearchRepositoryPresenterOutput!) {
         self.output = output
@@ -35,6 +38,11 @@ extension SearchRepositoryPresenter: SearchRepositoryPresenterInput {
         }
 
     }
+
+    func cancelURLSession() {
+        urlSessionTask?.cancel()
+    }
+
 }
 
 extension SearchRepositoryPresenter {

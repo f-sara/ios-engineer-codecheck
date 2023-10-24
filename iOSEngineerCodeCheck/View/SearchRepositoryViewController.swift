@@ -12,9 +12,7 @@ final class SearchRepositoryViewController: UITableViewController{
     @IBOutlet weak var searchBar: UISearchBar!
 
     private var presenter: SearchRepositoryPresenterInput!
-
     var repositories: [RepositoryModel] = []
-    var urlSessionTask: URLSessionTask?
     var selectedRowIndex: Int?
 
     override func viewDidLoad() {
@@ -42,7 +40,7 @@ extension SearchRepositoryViewController: UISearchBarDelegate {
     }
 
     internal func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        urlSessionTask?.cancel()
+        presenter.cancelURLSession()
     }
 
     internal func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
