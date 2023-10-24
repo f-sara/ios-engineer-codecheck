@@ -10,4 +10,19 @@ import XCTest
 @testable import iOSEngineerCodeCheck
 
 class SearchRepositoryPresenterTests: XCTestCase {
+    var presenter: SearchRepositoryPresenter!
+
+    override func setUp() {
+        super.setUp()
+        presenter = SearchRepositoryPresenter(output: nil)
+    }
+
+    func testCreateAPIURL() {
+        let url = presenter.createAPIURL(for: "Swift")
+        XCTAssertNotNil(url)
+        XCTAssertEqual(url?.absoluteString, "https://api.github.com/search/repositories?q=Swift")
+    }
+
+
+
 }

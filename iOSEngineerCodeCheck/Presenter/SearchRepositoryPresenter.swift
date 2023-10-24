@@ -43,7 +43,7 @@ extension SearchRepositoryPresenter: SearchRepositoryPresenterInput {
 
 extension SearchRepositoryPresenter {
 
-    private func createAPIURL(for searchKeyword: String) -> URL? {
+    func createAPIURL(for searchKeyword: String) -> URL? {
         guard let apiURL = URL(string: "https://api.github.com/search/repositories?q=\(searchKeyword)") else {
             return nil
         }
