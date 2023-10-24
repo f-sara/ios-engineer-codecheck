@@ -42,7 +42,7 @@ extension SearchRepositoryPresenter: SearchRepositoryPresenterInput {
 }
 
 extension SearchRepositoryPresenter {
-    // APIのURLを構築
+
     private func createAPIURL(for searchKeyword: String) -> URL? {
         guard let apiURL = URL(string: "https://api.github.com/search/repositories?q=\(searchKeyword)") else {
             return nil
@@ -50,7 +50,6 @@ extension SearchRepositoryPresenter {
         return apiURL
     }
 
-    // URLセッション
     private func urlSession(apiURL: URL) {
         let urlSessionTask = URLSession.shared.dataTask(with: apiURL) { (data, _, error) in
 
@@ -69,7 +68,6 @@ extension SearchRepositoryPresenter {
         urlSessionTask.resume()
     }
 
-    // データのパース処理
     private func parseRepositoryData(data: Data) {
         do {
             if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
