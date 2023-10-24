@@ -11,7 +11,6 @@ import Foundation
 protocol SearchRepositoryPresenterInput {
     func searchRepositories(searchKeyword: String)
     func cancelURLSession()
-
 }
 
 protocol SearchRepositoryPresenterOutput: AnyObject {
@@ -27,22 +26,19 @@ final class SearchRepositoryPresenter {
         self.output = output
         self.repositories = []
     }
-
 }
 
 extension SearchRepositoryPresenter: SearchRepositoryPresenterInput {
-    func searchRepositories(searchKeyword: String) {
 
+    func searchRepositories(searchKeyword: String) {
         if let apiURL = createAPIURL(for: searchKeyword) {
             urlSession(apiURL: apiURL)
         }
-
     }
 
     func cancelURLSession() {
         urlSessionTask?.cancel()
     }
-
 }
 
 extension SearchRepositoryPresenter {

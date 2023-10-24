@@ -27,7 +27,6 @@ class DetailRepositoryViewController: UIViewController {
             updateUI(selectedRowIndex)
             getImage(selectedRowIndex)
         }
-        
     }
 }
 
@@ -51,6 +50,7 @@ extension DetailRepositoryViewController {
 
     private func parseImageData(_ imageURL: URL) {
         URLSession.shared.dataTask(with: imageURL) { (data, _, error) in
+
             if let data = data, let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                     self.repositoryImageView.image = image
@@ -58,6 +58,7 @@ extension DetailRepositoryViewController {
             } else {
                 print("画像取得エラー")
             }
+            
             if let error = error {
                 print("画像取得エラー: \(error.localizedDescription)")
             }

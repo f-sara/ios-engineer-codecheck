@@ -33,7 +33,6 @@ final class SearchRepositoryViewController: UITableViewController{
 
 extension SearchRepositoryViewController: UISearchBarDelegate {
 
-
     internal func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.text = ""
         return true
