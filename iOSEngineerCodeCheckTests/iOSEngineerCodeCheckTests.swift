@@ -22,6 +22,12 @@ class SearchRepositoryPresenterTests: XCTestCase {
         XCTAssertNotNil(url)
         XCTAssertEqual(url?.absoluteString, "https://api.github.com/search/repositories?q=Swift")
     }
+
+    func testSearchRepositories() {
+        let searchKeyword = "Swift"
+        presenter.searchRepositories(searchKeyword: searchKeyword)
+        XCTAssertNotNil(RepositoryModel.self)
+    }
 }
 
 class RepositoryModelTests: XCTestCase {
