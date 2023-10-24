@@ -22,7 +22,28 @@ class SearchRepositoryPresenterTests: XCTestCase {
         XCTAssertNotNil(url)
         XCTAssertEqual(url?.absoluteString, "https://api.github.com/search/repositories?q=Swift")
     }
-
-
-
 }
+
+class RepositoryModelTests: XCTestCase {
+
+    func testInit() {
+        let repositoy = RepositoryModel(
+            fullName: "test",
+            language: "test",
+            stargazersCount: 1,
+            watchersCount: 2,
+            forksCount: 3,
+            openIssuesCount: 4,
+            avatarURL: URL(string: "https://api.github.com")!
+        )
+
+        XCTAssertEqual(repositoy.fullName, "test")
+        XCTAssertEqual(repositoy.language, "test")
+        XCTAssertEqual(repositoy.stargazersCount, 1)
+        XCTAssertEqual(repositoy.watchersCount, 2)
+        XCTAssertEqual(repositoy.forksCount, 3)
+        XCTAssertEqual(repositoy.openIssuesCount, 4)
+        XCTAssertEqual(repositoy.avatarURL, URL(string: "https://api.github.com")!)
+    }
+}
+
