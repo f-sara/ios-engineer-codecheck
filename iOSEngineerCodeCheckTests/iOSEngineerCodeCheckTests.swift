@@ -1,5 +1,5 @@
 //
-//  iOSEngineerCodeCheckTests.swift
+//  SearchRepositoryPresenterTests.swift
 //  iOSEngineerCodeCheckTests
 //
 //  Created by 史 翔新 on 2020/04/20.
@@ -9,26 +9,47 @@
 import XCTest
 @testable import iOSEngineerCodeCheck
 
-class iOSEngineerCodeCheckTests: XCTestCase {
+class SearchRepositoryPresenterTests: XCTestCase {
+    var presenter: SearchRepositoryPresenter!
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    override func setUp() {
+        super.setUp()
+        presenter = SearchRepositoryPresenter(output: nil)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testCreateAPIURL() {
+        let url = presenter.createAPIURL(for: "Swift")
+        XCTAssertNotNil(url)
+        XCTAssertEqual(url?.absoluteString, "https://api.github.com/search/repositories?q=Swift")
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testSearchRepositories() {
+        let searchKeyword = "Swift"
+        presenter.searchRepositories(searchKeyword: searchKeyword)
+        XCTAssertNotNil(RepositoryModel.self)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
+
+class RepositoryModelTests: XCTestCase {
+
+    func testInit() {
+        let repositoy = RepositoryModel(
+            fullName: "test",
+            language: "test",
+            stargazersCount: 1,
+            watchersCount: 2,
+            forksCount: 3,
+            openIssuesCount: 4,
+            avatarURL: URL(string: "https://api.github.com")!
+        )
+
+        XCTAssertEqual(repositoy.fullName, "test")
+        XCTAssertEqual(repositoy.language, "test")
+        XCTAssertEqual(repositoy.stargazersCount, 1)
+        XCTAssertEqual(repositoy.watchersCount, 2)
+        XCTAssertEqual(repositoy.forksCount, 3)
+        XCTAssertEqual(repositoy.openIssuesCount, 4)
+        XCTAssertEqual(repositoy.avatarURL, URL(string: "https://api.github.com")!)
+    }
+}
+
