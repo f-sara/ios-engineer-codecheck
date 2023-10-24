@@ -12,34 +12,43 @@ final class SearchRepositoryViewController: UITableViewController{
     @IBOutlet weak var searchBar: UISearchBar!
 
     private var presenter: SearchRepositoryPresenterInput!
-
     var repositories: [RepositoryModel] = []
-    var urlSessionTask: URLSessionTask?
     var selectedRowIndex: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupSearchBar()
+        setupPresenter()
+    }
+
+    private func setupSearchBar() {
         searchBar.text = "GitHubのリポジトリを検索できるよー"
         searchBar.delegate = self
+    }
+
+    private func setupPresenter() {
         presenter = SearchRepositoryPresenter(output: self)
     }
 }
 
 extension SearchRepositoryViewController: UISearchBarDelegate {
 
-
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+    internal func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.text = ""
         return true
     }
 
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        urlSessionTask?.cancel()
+    internal func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter.cancelURLSession()
     }
 
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    internal func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchRepository()
+    }
+
+    internal func searchRepository() {
         guard let searchKeyword = searchBar.text, searchKeyword.count != 0 else { return }
-        presenter?.searchRepositories(SearchKeyword: searchKeyword)
+        presenter.searchRepositories(searchKeyword: searchKeyword)
     }
 }
 
@@ -71,7 +80,7 @@ extension SearchRepositoryViewController {
 }
 
 extension SearchRepositoryViewController: SearchRepositoryPresenterOutput {
-    func reloadData(repositories: [RepositoryModel]) {
+    internal func reloadData(repositories: [RepositoryModel]) {
         self.repositories = repositories
         DispatchQueue.main.async {
             self.tableView.reloadData()

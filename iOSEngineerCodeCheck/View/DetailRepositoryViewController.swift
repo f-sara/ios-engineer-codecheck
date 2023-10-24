@@ -24,36 +24,46 @@ class DetailRepositoryViewController: UIViewController {
         super.viewDidLoad()
         
         if let selectedRowIndex = parentController.selectedRowIndex {
-            let repository = parentController.repositories[selectedRowIndex]
-            repositoryTitleView.text = repository.fullName
-            languageLabel.text = "Written in \(repository.language)"
-            StarsCountLabel.text = "\(repository.stargazersCount) stars"
-            watchersCountLabel.text = "\(repository.watchersCount) watchers"
-            forksCountLabel.text = "\(repository.forksCount) forks"
-            issuesCountLabel.text = "\(repository.openIssuesCount) open issues"
-            getImage()
+            updateUI(selectedRowIndex)
+            getImage(selectedRowIndex)
         }
-        
+    }
+}
+
+extension DetailRepositoryViewController {
+
+    private func updateUI(_ selectedRowIndex: Int) {
+        let repository = parentController.repositories[selectedRowIndex]
+        repositoryTitleView.text = repository.fullName
+        languageLabel.text = "Written in \(repository.language)"
+        StarsCountLabel.text = "\(repository.stargazersCount) stars"
+        watchersCountLabel.text = "\(repository.watchersCount) watchers"
+        forksCountLabel.text = "\(repository.forksCount) forks"
+        issuesCountLabel.text = "\(repository.openIssuesCount) open issues"
     }
     
-    func getImage(){
-        if let selectedRowIndex = parentController.selectedRowIndex {
-            let repository = parentController.repositories[selectedRowIndex]
-            
-            let imageURL = repository.avatarURL
-            URLSession.shared.dataTask(with: imageURL) { (data, _, error) in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.repositoryImageView.image = image
-                    }
-                } else {
-                    print("画像取得エラー")
-                }
-                if let error = error {
-                    print("画像取得エラー: \(error.localizedDescription)")
-                }
-            }.resume()
-        }
+    private func getImage(_ selectedRowIndex: Int){
+        let repository = parentController.repositories[selectedRowIndex]
+        let imageURL = repository.avatarURL
+        parseImageData(imageURL)
     }
+
+    private func parseImageData(_ imageURL: URL) {
+        URLSession.shared.dataTask(with: imageURL) { (data, _, error) in
+
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.repositoryImageView.image = image
+                }
+            } else {
+                print("画像取得エラー")
+            }
+            
+            if let error = error {
+                print("画像取得エラー: \(error.localizedDescription)")
+            }
+        }.resume()
+    }
+
 }
 
