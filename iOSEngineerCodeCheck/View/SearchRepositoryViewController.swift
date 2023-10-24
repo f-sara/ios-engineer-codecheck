@@ -48,7 +48,7 @@ extension SearchRepositoryViewController: UISearchBarDelegate {
 
     internal func searchRepository() {
         guard let searchKeyword = searchBar.text, searchKeyword.count != 0 else { return }
-        presenter?.searchRepositories(searchKeyword: searchKeyword)
+        presenter.searchRepositories(searchKeyword: searchKeyword)
     }
 }
 
